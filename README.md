@@ -11,7 +11,12 @@ Tech Stack:
 
 
 
+##### version3:
 
+- add a Profile modal
+  - used Portals in React, to create a DOM node that exists outside the DOM hierarchy
+
+![3](demo_images/3.png)
 
 ##### version2:
 
