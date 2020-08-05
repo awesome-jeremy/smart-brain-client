@@ -47,6 +47,37 @@ class App extends Component {
     this.state = initialState;
   }
 
+  componentDidMount() {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:3000/signin', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      }).then(res => res.json())
+        .then(data => {
+          if (data.id) {
+            fetch(`http://localhost:3000/profile/${data.id}`, {
+              method: 'get',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+              }
+            })
+              .then(res => res.json())
+              .then(user => {
+                if(user){
+                  this.loadUser(user);
+                  this.onRouteChange('home');
+                }
+              }).catch(err => console.log(err));
+          }
+        }).catch(err => console.log(err))
+    }
+  }
+
   loadUser = (data) => {
     this.setState({
       user: {
@@ -144,7 +175,7 @@ class App extends Component {
         {
           isProfileOpen &&
           <Modal>
-            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} user={user} loadUser={this.loadUser}/>
+            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} user={user} loadUser={this.loadUser} />
           </Modal>
         }
         {route === 'home'
