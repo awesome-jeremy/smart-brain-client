@@ -27,15 +27,17 @@ class Profile extends Component {
             },
             body: JSON.stringify({ formInput: data })
         }).then(res => {
-            this.props.toggleModal();
-            this.props.loadUser({ ...this.props.user, ...this.state })
+            if (res.status === 200 || res.status === 304) {
+                this.props.toggleModal();
+                this.props.loadUser({ ...this.props.user, ...this.state })
+            }
         }).catch(err => console.log(err))
 
     }
 
     render() {
         const { user, toggleModal } = this.props;
-        const { name, age, pet } = this.state;
+        const { name, age, pet } = this.state; 
         return (
             <div className="profile-modal">
                 <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center bg-white">
