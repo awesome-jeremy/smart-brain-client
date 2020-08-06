@@ -11,21 +11,21 @@ class Register extends React.Component {
   }
 
   onNameChange = (event) => {
-    this.setState({name: event.target.value})
+    this.setState({ name: event.target.value })
   }
 
   onEmailChange = (event) => {
-    this.setState({email: event.target.value})
+    this.setState({ email: event.target.value })
   }
 
   onPasswordChange = (event) => {
-    this.setState({password: event.target.value})
+    this.setState({ password: event.target.value })
   }
 
   onSubmitSignIn = () => {
     fetch('http://localhost:3000/register', {
       method: 'post',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: this.state.email,
         password: this.state.password,
@@ -35,8 +35,45 @@ class Register extends React.Component {
       .then(response => response.json())
       .then(user => {
         if (user.id) {
-          this.props.loadUser(user)
-          this.props.onRouteChange('home');
+          // this.props.loadUser(user)
+          // this.props.onRouteChange('home');
+          this.onSubmitSignInAuthentication();
+        }
+      })
+  }
+
+  setToken = (token) => {
+    sessionStorage.setItem('token', token);
+  }
+
+  onSubmitSignInAuthentication = () => {
+    fetch('http://localhost:3000/signin', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.userId && data.success === 'true') {
+          this.setToken(data.token);
+
+          fetch(`http://localhost:3000/profile/${data.userId}`, {
+            method: 'get',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': data.token
+            }
+          })
+            .then(res => res.json())
+            .then(user => {
+              if (user) {
+                this.props.loadUser(user);
+                this.props.onRouteChange('home');
+              }
+            }).catch(err => console.log(err));
         }
       })
   }
