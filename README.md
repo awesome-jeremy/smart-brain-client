@@ -9,6 +9,14 @@ Tech Stack:
 2. tachyons
 3. Clarifai API - for AI face recognition
 
+##### vesion4:
+
+- Get rank emoji from AWS lambda and render on the page
+  - create AWS lambda using serverless
+  - create a function that respond with emoji based on the entries of uploading images from users
+
+![4](demo_images/4.png)
+
 
 
 ##### version3:
