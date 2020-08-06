@@ -8,6 +8,7 @@ Tech Stack:
 1. React.js
 2. tachyons
 3. Clarifai API - for AI face recognition
+4. AWS Lambda
 
 ##### vesion4:
 
