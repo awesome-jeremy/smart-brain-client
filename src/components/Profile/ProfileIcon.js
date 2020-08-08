@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
+import avatar from '../../assets/images/avatar.png'
 
 
 const ProfileIcon = (props) => {
@@ -17,7 +18,8 @@ const ProfileIcon = (props) => {
                     aria-expanded={dropdownOpen}
                 >
                     <img
-                        src="http://tachyons.io/img/logo.jpg"
+                        // src="http://tachyons.io/img/logo.jpg"
+                        src={avatar}
                         className="br-100 ba h3 w3 dib" alt="avatar" />
                 </DropdownToggle>
 
