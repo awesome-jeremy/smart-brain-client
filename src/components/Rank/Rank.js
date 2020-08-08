@@ -9,6 +9,17 @@ class Rank extends Component {
   }
 
   componentDidMount() {
+    this.getRankEmoji()
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.entries === this.props.entries) {
+      return
+    }
+    this.getRankEmoji()
+  }
+
+  getRankEmoji = () => {
     const { entries } = this.props;
     fetch(`https://cecietuom8.execute-api.ap-southeast-2.amazonaws.com/prod/rank?rank=${entries}`)
       .then(res => res.json())
@@ -19,6 +30,8 @@ class Rank extends Component {
       })
       .catch(err => console.log(err))
   }
+
+
 
   render() {
     const { name, entries } = this.props;
